@@ -2,6 +2,7 @@ class Product:
     name: str
     description: str
     price: float
+    price: str
     quantity: int
 
     def __init__(self, name, description, price, quantity):
@@ -27,6 +28,10 @@ class Product:
             if new_price < self.__price:
                 print('Вы ввели цену ниже прошлой')
                 self.__price = new_price
+
+        self.price = price
+        self.quantity = quantity
+
 
 class Category:
     name: str
@@ -55,3 +60,16 @@ class Category:
             my_list.append(f"{i.name}, {i.price} руб. Остаток: {i.quantity} шт.\n")
         return my_list
 
+    category_count = 0
+    total_products = 0
+
+    def __init__(self, name, description, products):
+        self.name = name
+        self.description = description
+        self.products = products
+
+        Category.category_count += 1
+        Category.total_products += len(products)
+
+    def product_count(self):
+        return len(self.products)
