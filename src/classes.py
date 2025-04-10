@@ -2,7 +2,6 @@ class Product:
     name: str
     description: str
     price: float
-    price: str
     quantity: int
 
     def __init__(self, name, description, price, quantity):
@@ -26,12 +25,9 @@ class Product:
             print('Цена не должна быть нулевая или отрицательная')
         else:
             if new_price < self.__price:
-                print('Вы ввели цену ниже прошлой')
-                self.__price = new_price
-
-        self.price = price
-        self.quantity = quantity
-
+                ans = str(input('Вы ввели цену ниже прошлой, подтвердите изменение цены (y/n,да/нет)'))
+                if ans.lower() == 'y':
+                    self.__price = new_price
 
 class Category:
     name: str
@@ -50,7 +46,10 @@ class Category:
         Category.category_count += 1
 
     def add_product(self,product):
-        self.__products.append(product)
+        if not isinstance(product,Product):
+            raise TypeError("Нельзя добавлять объекты не типа Класс")
+        else:
+            self.__products.append(product)
         Category.product_count += 1
 
     @property
@@ -59,17 +58,3 @@ class Category:
         for i in self.__products:
             my_list.append(f"{i.name}, {i.price} руб. Остаток: {i.quantity} шт.\n")
         return my_list
-
-    category_count = 0
-    total_products = 0
-
-    def __init__(self, name, description, products):
-        self.name = name
-        self.description = description
-        self.products = products
-
-        Category.category_count += 1
-        Category.total_products += len(products)
-
-    def product_count(self):
-        return len(self.products)
